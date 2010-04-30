@@ -12,6 +12,10 @@ set (CMAKE_BUILD_TYPE debug)
 # global build variables
 include_directories ("${PROJECT_SOURCE_DIR}/include")
 
+# variables to the configuration file
+set (ARG 1)
+configure_file ("${PROJECT_SOURCE_DIR}/include/config.h.in" "${PROJECT_SOURCE_DIR}/include/config.h")
+
 # build library
 add_library (show lib/show.c)
 
