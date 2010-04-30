@@ -4,11 +4,16 @@
 
 int main(int argc, char *argv[])
 {
-#ifdef ARG
- printf("ARG : %d\n", ARG);
+#ifdef ENABLE_SHARED
+ printf("ENABLE_SHARED : %s\n", ENABLE_SHARED);
 #endif
 
- printf("%s():%d\n", __FUNCTION__, __LINE__);
+#ifdef DEBUG
+ printf("hello world %s():%d\n", __FUNCTION__, __LINE__);
+#else
+ printf("hello world\n");
+#endif
+
  show();
 
  return 0;
