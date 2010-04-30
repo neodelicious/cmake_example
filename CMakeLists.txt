@@ -8,9 +8,20 @@ project (cmake_example)
 option (ENABLE_SHARED "Select OFF to build libraries as static" ON)
 option (DEBUG "Select ON to define DEBUG" ON)
 option (DEBUG2 "Select ON to define DEBUG2" ON)
-message (ENABLE_SHARED - "${ENABLE_SHARED}")
-message (DEBUG - "${DEBUG}")
-message (DEBUG2 - "${DEBUG2}")
+message ("ENABLE_SHARED - ${ENABLE_SHARED}")
+message ("DEBUG - ${DEBUG}")
+message ("DEBUG2 - ${DEBUG2}")
+
+# checking dependencies
+include (FindPkgConfig)
+#pkg_check_modules (pkgs REQUIRED x11>=1.2.2 xrender)
+pkg_check_modules (pkgs x11>=1.2.2 xrender)
+foreach (flag ${pkgs_CFLAGS})
+  set (EXTRA_LIBS ${EXTRA_LIBS} ${flag})
+endforeach (flag)
+foreach (flag ${pkgs_LDFLAGS})
+  set (EXTRA_LIBS ${EXTRA_LIBS} ${flag})
+endforeach (flag)
 
 # global CMAKE variables
 if (ENABLE_SHARED)
@@ -31,7 +42,7 @@ add_library (show lib/show.c)
 
 # build source
 add_executable (example src/main.c)
-target_link_libraries (example show)
+target_link_libraries (example show ${EXTRA_LIBS})
 
 # install
 install (TARGETS show DESTINATION lib)
