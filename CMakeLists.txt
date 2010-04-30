@@ -18,6 +18,7 @@ if (ENABLE_SHARED)
 endif (ENABLE_SHARED)
 set (CMAKE_VERBOSE_MAKEFILE true)
 set (CMAKE_BUILD_TYPE debug)
+set (CMAKE_INSTALL_PREFIX /usr)
 
 # global build variables
 include_directories ("${PROJECT_SOURCE_DIR}/include")
@@ -31,3 +32,8 @@ add_library (show lib/show.c)
 # build source
 add_executable (example src/main.c)
 target_link_libraries (example show)
+
+# install
+install (TARGETS show DESTINATION lib)
+install (TARGETS example DESTINATION bin)
+install (FILES ${PROJECT_SOURCE_DIR}/include/show.h DESTINATION include)
