@@ -1,8 +1,9 @@
 #/bin/sh
 
-if !(test -d build) ;
-then mkdir -v build
+if test -d build ;
+then rm -rf build
 fi
+mkdir build
 
 cd build
 cmake .. && make
